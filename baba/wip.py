@@ -1,5 +1,5 @@
 # %%
-from more_itertools import windowed
+from rules import rulefinder
 
 # %% MAKE LEVEL
 N, M = 9, 11;
@@ -35,15 +35,11 @@ for row in grid:
     print(''.join(row))
 
 # %% PARSE RULES
-def rulefinder(grid):
-    rules = [];
-    for row in grid:
-        for t in windowed(row,3):
-            if t[0].islower() and t[1]=='i' and t[2].islower():
-                rules.append(t);
-    return rules
 
+rulefinder([['b','i','y']])
+# rulefinder([['b','i','y']])
 
+# %%
 for rule in rulefinder(grid):
     print(''.join(rule))
 

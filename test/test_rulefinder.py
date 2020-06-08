@@ -7,41 +7,21 @@ from baba.rules import rulefinder
 
 class TestValidInput(unittest.TestCase):
 
-    def test_null_none(self):
-        grid = [[]]
-        self.assertEqual(rulefinder(grid), None)
-
-    def test_null_empty(self):
+    def test_empty(self):
         grid = [[]]
         self.assertEqual(rulefinder(grid), [])
 
-    def test_null_large(self):
+    def test_large(self):
         grid = [['.' for j in range(10)] for k in range(10)]
         self.assertEqual(rulefinder(grid), [])
 
-    def test_null_tall(self):
+    def test_tall(self):
         grid = [['.' for j in range(1)] for k in range(10)]
         self.assertEqual(rulefinder(grid), [])
 
-    def test_null_wide(self):
+    def test_wide(self):
         grid = [['.' for j in range(10)] for k in range(1)]
         self.assertEqual(rulefinder(grid), [])
-
-    def test_notagrid_int(self):
-        with self.assertRaises(TypeError):
-            rulefinder(1)
-        
-    def test_notagrid_str(self):
-        with self.assertRaises(TypeError):
-            rulefinder('hi')
-
-    def test_notagrid_size_small(self):
-        with self.assertRaises(TypeError):
-            rulefinder([])
-
-    def test_notagrid_size_large(self):
-        with self.assertRaises(TypeError):
-            rulefinder([[]])
 
 class TestSingleRules(unittest.TestCase):
     grid = [['.' for j in range(10)] for k in range(10)]
@@ -53,7 +33,8 @@ class TestSingleRules(unittest.TestCase):
     def test_single_rule(self):
         grid = [['b','i','y']]
         rules = rulefinder(grid);
-        self.assertEqual(rules, ['biy'])
+        self.assertEqual(len(rules),1)
+        self.assertEqual(''.join(rules[0]), 'biy')
 
 if __name__ == '__main__':
     unittest.main()
