@@ -1,5 +1,6 @@
 # %%
 from rules import rulefinder
+from grids import *
 
 # %% MAKE LEVEL
 N, M = 9, 11;
@@ -31,12 +32,14 @@ grid[-1][-3] = 'r';
 grid[-1][-2] = 'i';
 grid[-1][-1] = 'p';
 
-for row in grid:
-    print(''.join(row))
+grid_string = grid_to_string(grid);
+print(grid_string)
+[[cell for cell in row] for row in grid_string.split('\n')]
 
 # %% PARSE RULES
 
-rulefinder([['b','i','y']])
+a = '\n'.join(''.join(row) for row in grid);
+print(a)
 # rulefinder([['b','i','y']])
 
 # %%
@@ -44,5 +47,9 @@ for rule in rulefinder(grid):
     print(''.join(rule))
 
 # %%
-a = 1;
-print(a)
+def grid_to_string(grid):
+    return '\n'.join(''.join(row) for row in grid)
+    
+
+# %%
+string_to_grid(grid_to_string([['.','.'],['.','.','.'],['.','.']]))
