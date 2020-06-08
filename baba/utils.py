@@ -37,3 +37,9 @@ def rotate_m90(grid):
 def rotate_180(grid):
     ''' Rotate grid 180 deg '''
     return rotate_p90(rotate_p90(grid))
+
+# %%
+
+def empty_NM(N,M,element='.'):
+    ''' Make an empty NxM grid '''
+    return [[element for _ in range(M)] for _ in range(N)]
