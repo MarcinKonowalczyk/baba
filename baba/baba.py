@@ -35,7 +35,18 @@ for row in grid:
     print(''.join(row))
 
 # %% PARSE RULES
-for row in grid:
-    for t in windowed(row,3):
-        if t[0].islower() and t[1]=='i' and t[2].islower():
-            print(''.join(t))
+def rulefinder(grid):
+    rules = [];
+    for row in grid:
+        for t in windowed(row,3):
+            if t[0].islower() and t[1]=='i' and t[2].islower():
+                rules.append(t);
+    return rules
+
+
+for rule in rulefinder(grid):
+    print(''.join(rule))
+
+# %%
+a = 1;
+print(a)
