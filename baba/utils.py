@@ -1,3 +1,20 @@
+# %% Things to export
+__all__ = ['PROPERTIES','NOUNS','ENTITIES','isproperty','isnoun','isentity','SYMBOLS','issymbol','isis','isempty','grid_to_string','string_to_grid','default_grid_string','default_grid','transpose','fliplr','rotate_p90','rotate_m90','rotate_180','empty_NM']
+
+# %%
+PROPERTIES = ('y','p','s','n')
+NOUNS = ('b','w','f','r')
+ENTITIES = tuple(n.upper() for n in NOUNS)
+
+# Helper functions
+isproperty = lambda symbol: symbol in PROPERTIES
+isnoun = lambda symbol: symbol in NOUNS
+isentity = lambda symbol: symbol in ENTITIES
+
+SYMBOLS = (*PROPERTIES,*NOUNS,*ENTITIES)
+issymbol = lambda symbol: symbol in SYMBOLS
+isis = lambda symbol: symbol=='i' # Treat 'is' in a special way
+isempty = lambda cell: cell=='.'
 # %%
 def grid_to_string(grid):
     ''' Convert grid to multiline string '''

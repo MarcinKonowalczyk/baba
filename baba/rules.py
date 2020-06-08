@@ -2,18 +2,10 @@
 from more_itertools import windowed
 from collections import namedtuple
 
-PROPERTIES = ('y','p','s','n')
-NOUNS = ('b','w','f','r')
-ENTITIES = tuple(n.upper() for n in NOUNS)
+import os, sys
+sys.path.append(os.path.realpath('.'))
 
-# Helper functions
-isproperty = lambda symbol: symbol in PROPERTIES
-isnoun = lambda symbol: symbol in NOUNS
-isentity = lambda symbol: symbol in ENTITIES
-
-VALID_SYMBOLS = (*PROPERTIES,*NOUNS,*ENTITIES)
-issymbol = lambda symbol: symbol in VALID_SYMBOLS
-isis = lambda symbol: symbol=='i' # Treat 'is' in a special way
+from baba.utils import *
 
 def rulefinder(grid):
     ''' Find all the rules in the grid '''
