@@ -18,7 +18,7 @@ class RockAndWall(unittest.TestCase):
         piles = map(sp,('.','.R','.RR','.R.','.R.R','.W','.WW','.RW'))
         for pile in piles:
             with self.subTest(pile): 
-                self.assertEquals(attempt_to_move(pile,behaviours),pile)
+                self.assertEqual(attempt_to_move(pile,behaviours),pile)
 
     def test_simple_moves(self):
         ''' Simple successful moves '''
@@ -26,7 +26,7 @@ class RockAndWall(unittest.TestCase):
         targets = map(sp,('.R','.R.','.RR','.RW','.RRW','.RR..W'))
         for pile,target in zip(piles,targets):
             with self.subTest(pile): 
-                self.assertEquals(attempt_to_move(pile,behaviours),target)
+                self.assertEqual(attempt_to_move(pile,behaviours),target)
 
     def test_simple_stuck(self):
         ''' Simple cases of UnableToMove exception '''
@@ -42,7 +42,7 @@ class RockAndWall(unittest.TestCase):
         targets = map(sp,('.'+'R'*100,'.'+'R'*100+'W'))
         for pile,target in zip(piles,targets):
             with self.subTest(pile): 
-                self.assertEquals(attempt_to_move(pile,behaviours),target)
+                self.assertEqual(attempt_to_move(pile,behaviours),target)
 
     def test_long_stuck(self):
         ''' Long pile raising UnableToMove exception '''
