@@ -59,7 +59,7 @@ def timestep(grid,behaviors,step):
             try:
                 shifted_pile = attempt_to_move(pile,behaviors)
                 for l,elem in enumerate(reversed(shifted_pile)):
-                    new_grid[j][k] = elem
+                    new_grid[l][k] = elem
 
                 new_grid[j-1][k] = cell;
             except UnableToMove:
@@ -67,11 +67,6 @@ def timestep(grid,behaviors,step):
 
     new_grid = crots[step](new_grid)
     return new_grid
-
-new_grid = timestep(grid,behaviors,'^');
-
-for row in new_grid:
-    print(' '.join(row))
 
 # %%
 def play(grid,sequence):
