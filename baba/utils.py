@@ -1,8 +1,10 @@
 # %% Things to export
-__all__ = ['PROPERTIES','NOUNS','ENTITIES','isproperty','isnoun','isentity','SYMBOLS','issymbol','isis','isempty','grid_to_string','string_to_grid','default_grid_string','default_grid','transpose','fliplr','rotate_p90','rotate_m90','rotate_180','empty_NM']
+__all__ = ['PROPERTIES','NOUNS','ENTITIES','isproperty','isnoun','isentity','SYMBOLS','issymbol','isis','isempty','grid_to_string','string_to_grid','default_grid_string','default_grid','transpose','fliplr','rotate_p90','rotate_m90','rotate_180','empty_NM','make_behaviour']
 
 # %%
+# you, push, stop, win
 PROPERTIES = ('y','p','s','n')
+# baba, wall, flag, rock
 NOUNS = ('b','w','f','r')
 ENTITIES = tuple(n.upper() for n in NOUNS)
 
@@ -60,3 +62,7 @@ def rotate_180(grid):
 def empty_NM(N,M,element='.'):
     ''' Make an empty NxM grid '''
     return [[element for _ in range(M)] for _ in range(N)]
+
+def make_behaviour(you=False,push=False,stop=False,win=False):
+    ''' Helper to make a behaviour '''
+    return dict(zip(PROPERTIES,(you,push,stop,win)))

@@ -4,11 +4,12 @@ import unittest
 import os, sys
 sys.path.append(os.path.realpath('.'))
 from baba.play import timestep, STEPS
+
 from baba.utils import string_to_grid as sg
-from baba.utils import PROPERTIES, ENTITIES
+from baba.utils import make_behaviour, PROPERTIES, ENTITIES
 
 # 'Baba is you' rule
-biy = behaviors = {'b':dict(zip(PROPERTIES,(True,False,True,True)))}
+biy = {'b':make_behaviour(you=True)}
 
 class Walking(unittest.TestCase):
 
