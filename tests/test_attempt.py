@@ -1,10 +1,11 @@
 import unittest
+from itertools import chain
 
 # Add '.' to path so running this file by itself also works
 import os, sys
 sys.path.append(os.path.realpath('.'))
 from baba.play import attempt_to_move, UnableToMove
-from baba.utils import make_behaviour
+from baba.utils import make_behaviour, PROPERTIES, NOUNS
 
 # 'Rock is push' and 'Wall is stop'
 behaviours = {'r':make_behaviour(push=True),'w':make_behaviour(stop=True)}
@@ -50,6 +51,19 @@ class RockAndWall(unittest.TestCase):
         for pile in piles:
             with self.assertRaises(UnableToMove):
                 attempt_to_move(pile,behaviours)
+
+class PushingText(unittest.TestCase):
+
+    def test_pushing(self):
+        ''' Test pushing all the pieces of text '''
+        for text in chain(PROPERTIES,NOUNS,'i'):
+            format_fun = lambda x: sp(x.format(text))
+            piles = map(format_fun,('{0}.','{0}{0}.','{0}.{0}'))
+            targets = map(format_fun,('.{0}','.{0}{0}','.{0}{0}'))
+            print('\n',text,[i for i in piles],[i for i in targets])
+            for pile,target in zip(piles,targets):
+                with self.subTest(text):
+                    self.assertEqual(attempt_to_move(pile,behaviours),target)
 
 if __name__ == '__main__':
     unittest.main()
