@@ -34,11 +34,11 @@ class Walking(unittest.TestCase):
                 '...\n{}..\n...','...\n..{}\n...'))
 
             # 'Entity' is you rule
-            behaviors = {entity.lower():dict(zip(PROPERTIES,(True,False,True,True)))} 
+            behaviours = {entity.lower():dict(zip(PROPERTIES,(True,False,True,True)))} 
             
             for step,target in zip(STEPS,targets):
                 with self.subTest(grid):
-                    grid2 = timestep(grid,behaviors,step)
+                    grid2 = timestep(grid,behaviours,step)
                     self.assertEqual(grid2,target)
 
     def test_claustrophobic_baba(self):

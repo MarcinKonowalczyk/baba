@@ -15,7 +15,7 @@ crots = dict(zip(STEPS,crots))
 class UnableToMove(Exception):
     pass
 
-def attempt_to_move(pile,behaviors):
+def attempt_to_move(pile,behaviours):
     ''' Attempt to move a pile of cells in accordance with their behaviour '''
     
     if len(pile)==0: # Empty pile
@@ -27,23 +27,23 @@ def attempt_to_move(pile,behaviors):
         raise UnableToMove
 
     # Larger pile
-    cantpush = lambda cell: isentity(cell) and not behaviors[cell.lower()]['p']
+    cantpush = lambda cell: isentity(cell) and not behaviours[cell.lower()]['p']
     if cantpush(pile[0]):
         raise UnableToMove
 
     if isempty(pile[1]):
         return (pile[1], pile[0], *pile[2:])
     else:
-        budged = attempt_to_move(pile[1:],behaviors)
+        budged = attempt_to_move(pile[1:],behaviours)
         return (budged[0], pile[0], *budged[1:])
 
-def timestep(grid,behaviors,step):
-    ''' Advance grid a single timestep, given the step and the current behaviors '''
+def timestep(grid,behaviours,step):
+    ''' Advance grid a single timestep, given the step and the current behaviours '''
     grid = rots[step](grid)
     N, M = len(grid), len(grid[0])
     new_grid = empty_NM(N,M)
 
-    isyou = lambda cell: isentity(cell) and behaviors[cell.lower()]['y']
+    isyou = lambda cell: isentity(cell) and behaviours[cell.lower()]['y']
 
     for j,row in enumerate(grid):
         for k,cell in enumerate(row):
@@ -57,7 +57,7 @@ def timestep(grid,behaviors,step):
             # Attempt to move
             pile = [new_grid[l][k] for l in reversed(range(j))]
             try:
-                shifted_pile = attempt_to_move(pile,behaviors)
+                shifted_pile = attempt_to_move(pile,behaviours)
                 for l,elem in enumerate(reversed(shifted_pile)):
                     new_grid[l][k] = elem
 

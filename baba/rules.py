@@ -39,16 +39,16 @@ def rulefinder(grid):
 # %%
 # TODO: Add tests
 def ruleparser(rules):
-    ''' Parse valid rules into behaviors '''
+    ''' Parse valid rules into behaviours '''
 
-    behaviors = {noun:(make_behavior()) for noun in NOUNS}
+    behaviours = {noun:(make_behaviour()) for noun in NOUNS}
     transformations = []
 
     # Parse the rules
     for subject, _, action in rules:
         # Noun is (Noun OR Property)
         if isproperty(action): # Noun is a Property
-            behaviors[subject][action] = True
+            behaviours[subject][action] = True
         else: # (Noun is Noun)
             transformations.append((subject,action))
 
@@ -63,6 +63,6 @@ def ruleparser(rules):
     transformations = new_transformations
 
     # Add entry for text behaviour
-    behaviors['t'] = make_behavior(push=True);
+    behaviours['t'] = make_behaviour(push=True);
 
-    return behaviors, transformations
+    return behaviours, transformations
