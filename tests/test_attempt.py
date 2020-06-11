@@ -5,7 +5,8 @@ from itertools import chain
 import os, sys
 sys.path.append(os.path.realpath('.'))
 from baba.play import attempt_to_move, UnableToMove
-from baba.utils import make_behaviour, PROPERTIES, NOUNS
+from baba.utils import make_behaviour
+from baba.utils import ENTITIES, PROPERTIES, NOUNS
 
 # 'Rock is push' and 'Wall is stop'
 behaviours = {'r':make_behaviour(push=True),'w':make_behaviour(stop=True)}
@@ -52,11 +53,25 @@ class RockAndWall(unittest.TestCase):
             with self.assertRaises(UnableToMove):
                 attempt_to_move(pile,behaviours)
 
-class PushingText(unittest.TestCase):
+    def test_no_behaviour(self):
+        ''' Push entity with no associated behaviour dictionary '''
+        for entity in ENTITIES:
+            pile = sp('{}.'.format(entity))
+            with self.assertRaises(KeyError):
+                attempt_to_move(pile,{})
 
+    def test_no_property(self):
+        ''' Push entity with no property in the behaviour dictionary '''
+        for entity in ENTITIES:
+            pile = sp('{}.'.format(entity))
+            behaviour = {'{}'.format(entity.lower):{}}
+            with self.assertRaises(KeyError):
+                attempt_to_move(pile,behaviour)
+
+class PushingText(unittest.TestCase):
     def test_pushing(self):
         ''' Test pushing all the pieces of text '''
-        for text in chain(PROPERTIES,NOUNS,'i'):
+        for text in chain(NOUNS,PROPERTIES,'i'):
             format_fun = lambda x: sp(x.format(text))
             piles = map(format_fun,('{0}.','{0}{0}.','{0}.{0}'))
             targets = map(format_fun,('.{0}','.{0}{0}','.{0}{0}'))
@@ -64,6 +79,22 @@ class PushingText(unittest.TestCase):
             for pile,target in zip(piles,targets):
                 with self.subTest(text):
                     self.assertEqual(attempt_to_move(pile,behaviours),target)
+
+    def test_no_behaviour(self):
+        ''' Push text with no associated behaviour dictionary '''
+        for text in chain(NOUNS,PROPERTIES,'i'):
+            pile = sp('{}.'.format(text))
+            with self.subTest(text):
+                with self.assertRaises(KeyError):
+                    attempt_to_move(pile,{})
+
+    def test_no_property(self):
+        ''' Push text with no associated behaviour dictionary '''
+        for text in chain(NOUNS,PROPERTIES,'i'):
+            pile = sp('{}.'.format(text))
+            behaviour = {'t':{}}
+        with self.assertRaises(KeyError):
+            attempt_to_move(pile,behaviour)
 
 if __name__ == '__main__':
     unittest.main()
