@@ -27,8 +27,8 @@ def attempt_to_move(pile,behaviours):
         raise UnableToMove
 
     # Larger pile
-    cantpush = lambda cell: isentity(cell) and not behaviours[cell.lower()]['p']
-    if cantpush(pile[0]):
+    pushable = lambda cell: behaviours[cell.lower()]['p']
+    if not pushable(pile[0]):
         raise UnableToMove
 
     if isempty(pile[1]):

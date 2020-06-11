@@ -6,10 +6,10 @@ import os, sys
 sys.path.append(os.path.realpath('.'))
 from baba.play import attempt_to_move, UnableToMove
 from baba.utils import make_behaviour
-from baba.utils import ENTITIES, PROPERTIES, NOUNS
+from baba.utils import ENTITIES, PROPERTIES, NOUNS, TEXT
 
-# 'Rock is push' and 'Wall is stop'
-behaviours = {'r':make_behaviour(push=True),'w':make_behaviour(stop=True)}
+# 'Rock is push' and, implicitly, 'Wall is stop'
+behaviours = {'r':make_behaviour(push=True),'w':make_behaviour()}
 
 # String to pile
 sp = lambda string: tuple(j for j in string)
@@ -82,7 +82,7 @@ class PushingText(unittest.TestCase):
 
     def test_no_behaviour(self):
         ''' Push text with no associated behaviour dictionary '''
-        for text in chain(NOUNS,PROPERTIES,'i'):
+        for text in TEXT:
             pile = sp('{}.'.format(text))
             with self.subTest(text):
                 with self.assertRaises(KeyError):
@@ -90,7 +90,7 @@ class PushingText(unittest.TestCase):
 
     def test_no_property(self):
         ''' Push text with no associated behaviour dictionary '''
-        for text in chain(NOUNS,PROPERTIES,'i'):
+        for text in TEXT:
             pile = sp('{}.'.format(text))
             behaviour = {'t':{}}
         with self.assertRaises(KeyError):

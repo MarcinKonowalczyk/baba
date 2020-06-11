@@ -7,18 +7,21 @@ This is a work-in-progress project. The intended scope, however, is as follows:
 
 - 4 possible entities: `Baba`, `Wall`, `Flag`, `Rock` (uppercase)
 - 4 corresponding nouns (lowercase)
-- 4 properties: `Push`, `Stop`, `Win` and the pronoun `You`
+- 3 properties: `push`, `win` and the pronoun `you`
 - Operator `is`
   
-Overall this gives 13 possible grid states + empty. The following interactions are simplified in this version.
+Overall this gives 12 possible grid states + empty (13 overall). The following interactions are simplified in this version:
 
-- Entities cannot overlap. If a move leading to an overlap is requested, the objects act as if they were `stop`. This *should* prevent the game from becoming too broken and makes programming easier.
-- The game is played by providing a sequence of actions. The allowed actions are `up`, `down`, `left` and `right`. No idle nor undo actions are implemented as they are not necessary to play the game.
+- Entities cannot overlap. Effectively everything is `stop`. This *should* prevent the game from becoming too broken and makes programming easier. While still allowing for interesting things to happen.
+- No idle nor undo actions.
 
 The following, however, are supposed to work:
 
 - Noun is Noun. Something like `baba is wall`, for example.
 - NounA is NounA overruling the behaviors of NounA is NounB. For example if `wall is wall`, `wall` cannot be `baba`. The rule `wall is baba` can exist but it does nothing.
+- Text is implicitly push.
+
+The game is played by providing a sequence of actions. The allowed actions are `up`, `down`, `left` and `right`. The game is won when 1) an entity which is `you` attempts to enter (since everything is `stop`) the square with another entity which is `win` , or 2) the entity which is `you` is also `win`.
 
 ## ToDo's
 

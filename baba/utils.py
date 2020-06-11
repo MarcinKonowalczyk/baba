@@ -1,9 +1,9 @@
 # %% Things to export
-__all__ = ['PROPERTIES','NOUNS','ENTITIES','isproperty','isnoun','isentity','SYMBOLS','issymbol','isis','isempty','grid_to_string','string_to_grid','default_grid_string','default_grid','transpose','fliplr','rotate_p90','rotate_m90','rotate_180','empty_NM','make_behaviour']
+__all__ = ['PROPERTIES','NOUNS','ENTITIES','isproperty','isnoun','isentity','SYMBOLS','issymbol','isis','istext','isempty','grid_to_string','string_to_grid','default_grid_string','default_grid','transpose','fliplr','rotate_p90','rotate_m90','rotate_180','empty_NM','make_behaviour']
 
 # %%
-# you, push, stop, win
-PROPERTIES = ('y','p','s','n')
+# you, push, win
+PROPERTIES = ('y','p','n')
 # baba, wall, flag, rock
 NOUNS = ('b','w','f','r')
 ENTITIES = tuple(n.upper() for n in NOUNS)
@@ -13,10 +13,14 @@ isproperty = lambda symbol: symbol in PROPERTIES
 isnoun = lambda symbol: symbol in NOUNS
 isentity = lambda symbol: symbol in ENTITIES
 
-SYMBOLS = (*PROPERTIES,*NOUNS,*ENTITIES)
+SYMBOLS = (*PROPERTIES,*NOUNS,*ENTITIES,'i')
 issymbol = lambda symbol: symbol in SYMBOLS
-isis = lambda symbol: symbol=='i' # Treat 'is' in a special way
+isis = lambda symbol: symbol=='i'
+
+TEXT = (*PROPERTIES,*NOUNS,'i')
+istext = lambda symbol: symbol in TEXT
 isempty = lambda cell: cell=='.'
+
 # %%
 def grid_to_string(grid):
     ''' Convert grid to multiline string '''
@@ -30,12 +34,12 @@ def string_to_grid(string):
 # %%
 def default_grid_string():
     ''' Hardcoded default grid string '''
-    string = '.............\n.............\n...biy.fin...\n.............\n...WWWWWWW...\n......R......\n....B.R.F....\n......R......\n...WWWWWWW...\n.............\n...wis.rip...\n.............\n.............''';
+    string = '.............\n.............\n...biy.fin...\n.............\n...WWWWWWW...\n......R......\n....B.R.F....\n......R......\n...WWWWWWW...\n.............\n...wi..rip...\n.............\n.............''';
     return string
 
 def default_grid():
     ''' Hardcoded default grid '''
-    grid = [['.','.','.','.','.','.','.','.','.','.','.','.','.'],['.','.','.','.','.','.','.','.','.','.','.','.','.'],['.','.','.','b','i','y','.','f','i','n','.','.','.'],['.','.','.','.','.','.','.','.','.','.','.','.','.'],['.','.','.','W','W','W','W','W','W','W','.','.','.'],['.','.','.','.','.','.','R','.','.','.','.','.','.'],['.','.','.','.','B','.','R','.','F','.','.','.','.'],['.','.','.','.','.','.','R','.','.','.','.','.','.'],['.','.','.','W','W','W','W','W','W','W','.','.','.'],['.','.','.','.','.','.','.','.','.','.','.','.','.'],['.','.','.','w','i','s','.','r','i','p','.','.','.'],['.','.','.','.','.','.','.','.','.','.','.','.','.'],['.','.','.','.','.','.','.','.','.','.','.','.','.']]
+    grid = [['.','.','.','.','.','.','.','.','.','.','.','.','.'],['.','.','.','.','.','.','.','.','.','.','.','.','.'],['.','.','.','b','i','y','.','f','i','n','.','.','.'],['.','.','.','.','.','.','.','.','.','.','.','.','.'],['.','.','.','W','W','W','W','W','W','W','.','.','.'],['.','.','.','.','.','.','R','.','.','.','.','.','.'],['.','.','.','.','B','.','R','.','F','.','.','.','.'],['.','.','.','.','.','.','R','.','.','.','.','.','.'],['.','.','.','W','W','W','W','W','W','W','.','.','.'],['.','.','.','.','.','.','.','.','.','.','.','.','.'],['.','.','.','w','i','.','.','r','i','p','.','.','.'],['.','.','.','.','.','.','.','.','.','.','.','.','.'],['.','.','.','.','.','.','.','.','.','.','.','.','.']]
     return grid
 
 # %%
@@ -63,6 +67,6 @@ def empty_NM(N,M,element='.'):
     ''' Make an empty NxM grid '''
     return [[element for _ in range(M)] for _ in range(N)]
 
-def make_behaviour(you=False,push=False,stop=False,win=False):
+def make_behaviour(you=False,push=False,win=False):
     ''' Helper to make a behaviour '''
-    return dict(zip(PROPERTIES,(you,push,stop,win)))
+    return dict(zip(PROPERTIES,(you,push,win)))
