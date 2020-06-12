@@ -11,6 +11,7 @@ from baba.utils import PROPERTIES, ENTITIES
 
 # 'Baba is you' and 'Flag is win' rules
 biy = {'b':mb(you=True)}
+rip = {'r':mb(push=True)}
 
 class Walking(unittest.TestCase):
 
@@ -84,29 +85,33 @@ class Winning(unittest.TestCase):
 
     def test_dont_win_but_push(self):
         ''' Walk into a win which is also push '''
-        grid = sg('BF.')
-        target = sg('.BF')
-        behaviour = {**biy,'f':mb(win=True,push=True)}
-        try:
-            grid2 = timestep(grid,behaviour,'>')
-            self.assertEqual(grid2,target)
-        except YouWin:
-            self.fail("'timestep' raised YouWin unexpectedly!")
+        grids = map(sg,('BF.','BFR.'))
+        targets = map(sg,('.BF','.BFR'))
+        behaviour = {**biy,**rip,
+            'f':mb(win=True,push=True)}
+        for grid, target in zip(grids,targets):
+            with self.subTest(grid):
+                try:
+                    grid2 = timestep(grid,behaviour,'>')
+                    self.assertEqual(grid2,target)
+                except YouWin:
+                    self.fail("'timestep' raised YouWin unexpectedly!")
 
     def test_win_push_wall(self):
         ''' Walk into a win which is also push, but against the wall '''
-        grid = sg('BF')
-        behaviour = {**biy,'f':mb(win=True,push=True)}
-        with self.assertRaises(YouWin):
-            timestep(grid,behaviour,'>')
+        grids = map(sg,('BF','BFR'))
+        behaviour = {**biy,**rip,
+            'f':mb(win=True,push=True)}
+        for grid in grids:
+            with self.assertRaises(YouWin):
+                timestep(grid,behaviour,'>')
 
     def test_rock_doesnt_win(self):
         ''' Push a rock into a win '''
         grids = map(sg,('BRF','BRF.'))
         targets = map(sg,('BRF','.BRF'))
-        behaviour = {**biy,
-        'f':mb(win=True,push=True),
-        'r':mb(push=True)}
+        behaviour = {**biy,**rip,
+            'f':mb(win=True,push=True)}
         for grid,target in zip(grids,targets):
             with self.subTest(grid):
                 try:
@@ -114,7 +119,6 @@ class Winning(unittest.TestCase):
                     self.assertEqual(grid2,target)
                 except YouWin:
                     self.fail("'timestep' raised YouWin unexpectedly!")
-    
 
 if __name__ == '__main__':
     unittest.main()
