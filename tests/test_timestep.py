@@ -36,7 +36,7 @@ class Walking(unittest.TestCase):
                 '...\n{}..\n...','...\n..{}\n...'))
 
             # 'Entity' is you rule
-            behaviours = {entity.lower():dict(zip(PROPERTIES,(True,False,True,True)))} 
+            behaviours = {entity.lower():mb(you=True)} 
             
             for step,target in zip(STEPS,targets):
                 with self.subTest(grid):
@@ -49,6 +49,15 @@ class Walking(unittest.TestCase):
         for step in STEPS:
             with self.subTest(grid):
                 grid2 = timestep(grid,biy,step)
+                self.assertEqual(grid2,grid)
+
+    def test_identity_crisis(self):
+        ''' Baba is not you '''
+        for entity in ENTITIES:
+            grid = sg('{}.'.format(entity))
+            behaviour = {entity.lower():mb(you=False)}
+            with self.subTest(entity):
+                grid2 = timestep(grid,behaviour,'>')
                 self.assertEqual(grid2,grid)
 
     def test_confused_baba(self):
