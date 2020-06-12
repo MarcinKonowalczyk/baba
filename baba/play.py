@@ -37,6 +37,9 @@ def attempt_to_move(pile,behaviours):
         budged = attempt_to_move(pile[1:],behaviours)
         return (budged[0], pile[0], *budged[1:])
 
+class YouWin(Exception):
+    pass
+
 def timestep(grid,behaviours,step):
     ''' Advance grid a single timestep, given the step and the current behaviours '''
     grid = rots[step](grid)
@@ -44,6 +47,7 @@ def timestep(grid,behaviours,step):
     new_grid = empty_NM(N,M)
 
     isyou = lambda cell: isentity(cell) and behaviours[cell.lower()]['y']
+    iswin = lambda cell: isentity(cell) and behaviours[cell.lower()]['n']
 
     for j,row in enumerate(grid):
         for k,cell in enumerate(row):
@@ -63,6 +67,8 @@ def timestep(grid,behaviours,step):
 
                 new_grid[j-1][k] = cell;
             except UnableToMove:
+                if len(pile)>0  and iswin(pile[0]):
+                    raise YouWin
                 new_grid[j][k] = cell;
 
     new_grid = crots[step](new_grid)

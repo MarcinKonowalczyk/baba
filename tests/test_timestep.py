@@ -3,13 +3,14 @@ import unittest
 # Add '.' to path so running this file by itself also works
 import os, sys
 sys.path.append(os.path.realpath('.'))
-from baba.play import timestep, STEPS
+from baba.play import timestep, STEPS, YouWin
 
 from baba.utils import string_to_grid as sg
-from baba.utils import make_behaviour, PROPERTIES, ENTITIES
+from baba.utils import make_behaviour as mb
+from baba.utils import PROPERTIES, ENTITIES
 
-# 'Baba is you' rule
-biy = {'b':make_behaviour(you=True)}
+# 'Baba is you' and 'Flag is win' rules
+biy = {'b':mb(you=True)}
 
 class Walking(unittest.TestCase):
 
@@ -22,7 +23,7 @@ class Walking(unittest.TestCase):
                 grid2 = timestep(grid,biy,step)
                 self.assertEqual(grid2,target)
 
-    def test_walking_nouns(self):
+    def test_walking_entities(self):
         ''' Walking entities '''
         for entity in ENTITIES:
             grid = sg('...\n.{}.\n...'.format(entity))
@@ -62,14 +63,58 @@ class Walking(unittest.TestCase):
     def test_complex_walking(self):
         ''' Test more complicates sequences of steps '''
         grid = sg('...\n.B.\n...')
-        steps = '^^VV<><>'
-        target = sg('...\n...\n.B.')
+        paths = ('^<VV>>^^<V','^^VV<><>')
+        targets = map(sg,('...\n.B.\n...','...\n...\n.B.'))
+        for steps,target in zip(paths,targets):
+            grid2 = grid; # Copy grid
+            for step in steps:
+                grid2 = timestep(grid2,biy,step)
+            self.assertEqual(grid2,target)
 
-        grid2 = grid; # Copy grid
-        for step in steps:
-            grid2 = timestep(grid2,biy,step)
+class Winning(unittest.TestCase):
 
-        self.assertEqual(grid2,target)
+    def test_win(self):
+        ''' Walk into a win '''
+        grids = map(sg,('BF','BF.'))
+        behaviour = {**biy,'f':mb(win=True)}
+        for grid in grids:
+            with self.subTest(grid):
+                with self.assertRaises(YouWin):
+                    timestep(grid,behaviour,'>')
+
+    def test_dont_win_but_push(self):
+        ''' Walk into a win which is also push '''
+        grid = sg('BF.')
+        target = sg('.BF')
+        behaviour = {**biy,'f':mb(win=True,push=True)}
+        try:
+            grid2 = timestep(grid,behaviour,'>')
+            self.assertEqual(grid2,target)
+        except YouWin:
+            self.fail("'timestep' raised YouWin unexpectedly!")
+
+    def test_win_push_wall(self):
+        ''' Walk into a win which is also push, but against the wall '''
+        grid = sg('BF')
+        behaviour = {**biy,'f':mb(win=True,push=True)}
+        with self.assertRaises(YouWin):
+            timestep(grid,behaviour,'>')
+
+    def test_rock_doesnt_win(self):
+        ''' Push a rock into a win '''
+        grids = map(sg,('BRF','BRF.'))
+        targets = map(sg,('BRF','.BRF'))
+        behaviour = {**biy,
+        'f':mb(win=True,push=True),
+        'r':mb(push=True)}
+        for grid,target in zip(grids,targets):
+            with self.subTest(grid):
+                try:
+                    grid2 = timestep(grid,behaviour,'>')
+                    self.assertEqual(grid2,target)
+                except YouWin:
+                    self.fail("'timestep' raised YouWin unexpectedly!")
+    
 
 if __name__ == '__main__':
     unittest.main()
