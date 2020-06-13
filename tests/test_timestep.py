@@ -16,7 +16,7 @@ rip = {'r':mb(push=True)}
 class Walking(unittest.TestCase):
 
     def test_walking_baba(self):
-        ''' Simple waling baba '''
+        ''' Simple walking baba '''
         grids = map(sg,('.\nB','B\n.','.B','B.'))
         targets = map(sg,('B\n.','.\nB','B.','.B'))
         for grid,step,target in zip(grids,STEPS,targets):
@@ -72,14 +72,13 @@ class Walking(unittest.TestCase):
 
     def test_complex_walking(self):
         ''' Test more complicates sequences of steps '''
-        grid = sg('...\n.B.\n...')
-        paths = ('^<VV>>^^<V','^^VV<><>')
-        targets = map(sg,('...\n.B.\n...','...\n...\n.B.'))
+        paths = ('V>^<<^^<>>','^<VV>>^^<V','^^VV<><>')
+        targets = map(sg,('..B\n...\n...','...\n.B.\n...','...\n...\n.B.'))
         for steps,target in zip(paths,targets):
-            grid2 = grid; # Copy grid
+            grid = sg('...\n.B.\n...')
             for step in steps:
-                grid2 = timestep(grid2,biy,step)
-            self.assertEqual(grid2,target)
+                grid = timestep(grid,biy,step)
+            self.assertEqual(grid,target)
 
 class Winning(unittest.TestCase):
 
