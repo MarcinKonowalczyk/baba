@@ -23,21 +23,19 @@ def rulefinder(grid):
         for row in grid:
             for t in windowed(row,3):
                 if isrule(t):
-                    rules.append(t)
+                    rules.append((t[0],t[2]))
 
     # Vertical rules
     if N>=3:
         for col in zip(*grid):
             for t in windowed(col,3):
                 if isrule(t):
-                    rules.append(t)
+                    rules.append((t[0],t[2]))
 
     # Sort according to the first letter
     rules = sorted(rules,key=lambda x:x[0])
     return rules
 
-# %%
-# TODO: Add tests
 def ruleparser(rules):
     ''' Parse valid rules into behaviours and swaps '''
 
@@ -45,7 +43,7 @@ def ruleparser(rules):
     swaps = []
 
     # Parse the rules
-    for subject, _, action in rules:
+    for subject, action in rules:
         # Noun is (Noun OR Property)
         if isproperty(action): # Noun is a Property
             behaviours[subject][action] = True
