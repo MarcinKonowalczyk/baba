@@ -58,7 +58,8 @@ class StringConversion(unittest.TestCase):
                     grid2 = string_to_grid(string,row_delimiter=d1,col_delimiter=d2)
                     self.assertEqual(grid2, grid)
 
-class RotationsSquare(unittest.TestCase):
+class RotatingSquares(unittest.TestCase):
+
     def test_clockwise(self):
         ''' Clockwise rotation '''
         with self.subTest('2x2'):
@@ -114,7 +115,7 @@ class RotationsSquare(unittest.TestCase):
             target = [['C','B','A'],['F','E','D'],['I','H','G']]
             self.assertEqual(fliplr(grid),target)
 
-class RotationsRectangle(unittest.TestCase):
+class RotatingRectangles(unittest.TestCase):
 
     def test_clockwise(self):
         ''' Clockwise rotation '''
@@ -127,6 +128,54 @@ class RotationsRectangle(unittest.TestCase):
         for grid,target in zip(grids,targets):
             with self.subTest():
                 self.assertEqual(rotate_p90(grid),target)
+
+    def test_counterclockwise(self):
+        ''' Counter-clockwise rotation '''
+        grids = ([['A','B']],[['A'],['B']],
+            [['A','B','C'],['D','E','F']],
+            [['A','B'],['C','D'],['E','F']])
+        targets = ([['B'],['A']],[['A','B']],
+            [['C','F'],['B','E'],['A','D']],
+            [['B','D','F'],['A','C','E']])
+        for grid,target in zip(grids,targets):
+            with self.subTest():
+                self.assertEqual(rotate_m90(grid),target)
+
+    def test_180(self):
+        ''' 180 deg rotation '''
+        grids = ([['A','B']],[['A'],['B']],
+            [['A','B','C'],['D','E','F']],
+            [['A','B'],['C','D'],['E','F']])
+        targets = ([['B','A']],[['B'],['A']],
+            [['F','E','D'],['C','B','A']],
+            [['F','E'],['D','C'],['B','A']])
+        for grid,target in zip(grids,targets):
+            with self.subTest():
+                self.assertEqual(rotate_180(grid),target)
+
+    def test_transpose(self):
+        ''' Transpose '''
+        grids = ([['A','B']],[['A'],['B']],
+            [['A','B','C'],['D','E','F']],
+            [['A','B'],['C','D'],['E','F']])
+        targets = ([['A'],['B']],[['A','B']],
+            [['A','D'],['B','E'],['C','F']],
+            [['A','C','E'],['B','D','F']])
+        for grid,target in zip(grids,targets):
+            with self.subTest():
+                self.assertEqual(transpose(grid),target)
+
+    def test_fliplr(self):
+        ''' Flip left right '''
+        grids = ([['A','B']],[['A'],['B']],
+            [['A','B','C'],['D','E','F']],
+            [['A','B'],['C','D'],['E','F']])
+        targets = ([['B','A']],[['A'],['B']],
+            [['C','B','A'],['F','E','D']],
+            [['B','A'],['D','C'],['F','E']])
+        for grid,target in zip(grids,targets):
+            with self.subTest():
+                self.assertEqual(fliplr(grid),target)
 
 
 class EmptyCreation(unittest.TestCase):
