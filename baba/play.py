@@ -29,7 +29,7 @@ def attempt_to_move(pile,behaviours):
         raise UnableToMove
 
     # Larger pile
-    pushable = lambda cell: behaviours[cell.lower()]['p']
+    pushable = lambda cell: (isentity(cell) and behaviours[cell.lower()]['p']) or (istext(cell) and behaviours['t']['p'])
     if not pushable(pile[0]):
         raise UnableToMove
 

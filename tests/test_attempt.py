@@ -5,11 +5,11 @@ from itertools import chain
 import os, sys
 sys.path.append(os.path.realpath('.'))
 from baba.play import attempt_to_move, UnableToMove
-from baba.utils import make_behaviour
+from baba.utils import make_behaviour as mb
 from baba.utils import ENTITIES, PROPERTIES, NOUNS, TEXT
 
 # 'Rock is push' and, implicitly, 'Wall is stop'
-behaviours = {'r':make_behaviour(push=True),'w':make_behaviour()}
+behaviours = {'r':mb(push=True),'w':mb()}
 
 # String to pile
 sp = lambda string: tuple(j for j in string)
@@ -71,14 +71,14 @@ class RockAndWall(unittest.TestCase):
 class PushingText(unittest.TestCase):
     def test_pushing(self):
         ''' Test pushing all the pieces of text '''
+        behaviour = {'t':mb(push=True)}
         for text in chain(NOUNS,PROPERTIES,'i'):
             format_fun = lambda x: sp(x.format(text))
             piles = map(format_fun,('{0}.','{0}{0}.','{0}.{0}'))
             targets = map(format_fun,('.{0}','.{0}{0}','.{0}{0}'))
-            print('\n',text,[i for i in piles],[i for i in targets])
             for pile,target in zip(piles,targets):
-                with self.subTest(text):
-                    self.assertEqual(attempt_to_move(pile,behaviours),target)
+                with self.subTest(text=text):
+                    self.assertEqual(attempt_to_move(pile,behaviour),target)
 
     def test_no_behaviour(self):
         ''' Push text with no associated behaviour dictionary '''
