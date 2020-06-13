@@ -1,4 +1,6 @@
 # %%
+from copy import deepcopy
+
 import os, sys
 sys.path.append(os.path.realpath('.'))
 from baba.utils import *
@@ -72,6 +74,23 @@ def timestep(grid,behaviours,step):
                 new_grid[j][k] = cell;
 
     new_grid = crots[step](new_grid)
+    return new_grid
+
+# %%
+
+def swap(grid,swaps):
+    ''' Apply all the swaps to the grid '''
+
+    stationary = (a for a,b in swaps if a==b)
+    swaps = ((a,b) for a,b in swaps if a!=b and a not in stationary)
+
+    new_grid = deepcopy(grid)
+    for a,b in swaps:
+        for j,row in enumerate(grid):
+            for k,cell in enumerate(row):
+                if isentity(cell) and cell.lower()==a:
+                    new_grid[j][k] = b.upper()
+    
     return new_grid
 
 # %%
