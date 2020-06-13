@@ -1,50 +1,62 @@
 import unittest
 
+from string import ascii_letters
+from random import choice, randrange
+from itertools import permutations
+
 # Add '.' to path so running this file by itself also works
 import os, sys
 sys.path.append(os.path.realpath('.'))
 from baba.utils import *
 
-class StringConversion1(unittest.TestCase):
-    def test_empty(self):
-        ''' Empty grid to empty string '''
-        grid = [[]]
-        self.assertEqual(grid_to_string(grid),'')
+class StringConversion(unittest.TestCase):
 
-    def test_large(self):
-        ''' Simple 3x3 grid string '''
+    def test_grid_to_string(self):
+        ''' 3x3 grid to string '''
         grid = [['.' for _ in range(3)] for _ in range(3)]
         target = '...\n...\n...';
         self.assertEqual(grid_to_string(grid), target)
 
-class StringConversion2(unittest.TestCase):
-    def test_empty(self):
-        ''' Empty string to empty grid '''
-        string = ''
-        self.assertEqual(string_to_grid(string),[[]])
-
-    def test_large(self):
+    def test_string_to_grid(self):
         ''' 3x3 string to grid '''
         string = '...\n...\n...'
         target = [['.' for _ in range(3)] for _ in range(3)]
         self.assertEqual(string_to_grid(string), target)
-
-class StringConvertion3(unittest.TestCase):
-    def test_backandforth_1(self):
+        
+    def test_back_and_forth(self):
         ''' Check that s2g reverses g2s '''
-        grid = [['.' for _ in range(10)] for _ in range(10)]
-        grid[0][0], grid[0][1], grid[0][2] = 'biy';
-        grid[0][-3], grid[0][2], grid[0][1] = 'fin';
-        grid[-1][0], grid[-1][1], grid[-1][2] = 'wis';
-        grid[-1][-3], grid[-1][2], grid[-1][1] = 'rip';
-
+        grid = default_grid()
         self.assertEqual(string_to_grid(grid_to_string(grid)),grid)
 
-    def test_backandforth_2(self):
+    def test_forth_and_back(self):
         ''' Check that g2s reverses s2g '''
-        string = 'biy.....fin\n...........\nWWWWWWWWWWW\n.....R.....\n..B..R..F..\n.....R.....\nWWWWWWWWWWW\n...........\n wis.....rip'
-
+        string = default_grid_string()
         self.assertEqual(grid_to_string(string_to_grid(string)),string)
+
+    def test_other_delimiters(self):
+        ''' g2s with other delimiters '''
+        delimiters = ('\n','',' ','|')
+        grid = [['.' for _ in range(3)] for _ in range(3)]
+        for d1,d2 in permutations(delimiters,2):
+            with self.subTest(d1=d1,d2=d2):
+                target = f'.{d2}.{d2}.{d1}.{d2}.{d2}.{d1}.{d2}.{d2}.'
+                string = grid_to_string(grid,row_delimiter=d1,col_delimiter=d2)
+                self.assertEqual(string, target)
+
+    def test_other_delimiters(self):
+        ''' s2g with other delimiters '''
+        delimiters = ('\n','',' ','|')
+        grid = [['.' for _ in range(3)] for _ in range(3)]
+        for d1,d2 in permutations(delimiters,2):
+            with self.subTest(d1=d1,d2=d2):
+                string = f'.{d2}.{d2}.{d1}.{d2}.{d2}.{d1}.{d2}.{d2}.'
+
+                if d1=='': # empty separator, therefore cannot remake grid
+                    with self.assertRaises(ValueError):
+                        string_to_grid(string,row_delimiter=d1,col_delimiter=d2)
+                else:
+                    grid2 = string_to_grid(string,row_delimiter=d1,col_delimiter=d2)
+                    self.assertEqual(grid2, grid)
 
 class Rotations(unittest.TestCase):
     def test_clockwise(self):
@@ -115,6 +127,56 @@ class EmptyCreation(unittest.TestCase):
         self.assertEqual(empty_NM(3,3),target)
         target = [['b']*3]*3
         self.assertEqual(empty_NM(3,3,element='b'),target)
+
+class GridValidator(unittest.TestCase):
+
+    def test_valid_shapes(self):
+        ''' Invalid grid shapes '''
+        grids = ([['.']*(j+1)]*(j+1) for j in range(5))
+        for grid in grids:
+            with self.subTest(grid=grid):
+                try:
+                    isvalidgrid(grid)
+                except AssertionError:
+                    self.fail('Unexpected AssertionError on a valid grid')
+
+    def test_invalid_shapes(self):
+        ''' Invalid grid shapes '''
+        grids = ([],[[]],[[],[]],[['.'],['.','.']])
+        for grid in grids:
+            with self.subTest(grid=grid):
+                with self.assertRaises(AssertionError):
+                    isvalidgrid(grid)
+
+    def test_valid_symbols(self):
+        ''' Valid symbols in a grid '''
+        for symbol in SYMBOLS:
+            grid = ([[f'{symbol}','.'],['.',f'{symbol}']])
+            with self.subTest(symbol=symbol):
+                try:
+                    isvalidgrid(grid)
+                except AssertionError:
+                    self.fail('Unexpected AssertionError on a valid grid')
+
+    def test_invalid_symbols(self):
+        ''' Invalid symbols in a grid '''
+        for symbol in filter(lambda x: x not in SYMBOLS,ascii_letters):
+            grid = ([[f'{symbol}','.'],['.',f'{symbol}']])
+            with self.subTest(symbol=symbol):
+                with self.assertRaises(AssertionError):
+                    isvalidgrid(grid)
+
+    def test_random_valid(self):
+        ''' Grid filled with random but valid symbols '''
+        for _ in range(10):
+            N, M = (randrange(1,11),randrange(1,11))
+            grid = [[choice((*SYMBOLS,'.')) for _ in range(M)] for _ in range(N)]
+            grid_string = grid_to_string(grid,row_delimiter='|');
+            with self.subTest(N=N,M=M,grid=grid_string):
+                try:
+                    isvalidgrid(grid)
+                except AssertionError:
+                    self.fail('Unexpected AssertionError on a valid grid')
 
 if __name__ == '__main__':
     unittest.main()

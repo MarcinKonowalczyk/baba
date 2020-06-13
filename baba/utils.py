@@ -1,5 +1,5 @@
 # %% Things to export
-__all__ = ['PROPERTIES','NOUNS','ENTITIES','isproperty','isnoun','isentity','SYMBOLS','issymbol','isis','istext','isempty','grid_to_string','string_to_grid','default_grid_string','default_grid','transpose','fliplr','rotate_p90','rotate_m90','rotate_180','empty_NM','make_behaviour']
+__all__ = ['PROPERTIES','NOUNS','ENTITIES','isproperty','isnoun','isentity','SYMBOLS','issymbol','isis','istext','isempty','grid_to_string','string_to_grid','default_grid_string','default_grid','transpose','fliplr','rotate_p90','rotate_m90','rotate_180','empty_NM','make_behaviour','isvalidgrid']
 
 # %%
 # you, push, win
@@ -22,14 +22,14 @@ istext = lambda symbol: symbol in TEXT
 isempty = lambda cell: cell=='.'
 
 # %%
-def grid_to_string(grid):
+def grid_to_string(grid,row_delimiter='\n',col_delimiter=''):
     ''' Convert grid to multiline string '''
-    return '\n'.join(''.join(row) for row in grid)
+    return row_delimiter.join(col_delimiter.join(row) for row in grid)
 
 # %%
-def string_to_grid(string):
+def string_to_grid(string,row_delimiter='\n',col_delimiter=''):
     ''' Convert multiline string to grid '''
-    return [[cell for cell in row] for row in string.split('\n')]
+    return [[cell for cell in row.replace(col_delimiter,'')] for row in string.split(row_delimiter)]
 
 # %%
 def default_grid_string():
@@ -70,3 +70,22 @@ def empty_NM(N,M,element='.'):
 def make_behaviour(you=False,push=False,win=False):
     ''' Helper to make a behaviour '''
     return dict(zip(PROPERTIES,(you,push,win)))
+
+#%%
+
+def isvalidgrid(grid):
+    ''' A pile of assertion to check that the grid is valid '''
+    
+    # Make sure grid is a list of lists
+    assert isinstance(grid,list), 'Grid is not a list'
+    assert len(grid)>0, 'Grid is an empty list'
+    assert isinstance(grid[0],list), 'Grid must be a list of lists'
+
+    N, M = len(grid), len(grid[0])
+    
+    assert M>0, 'Grid has zero width'
+        
+    for row in grid:
+        assert len(row)==M, 'Grid must be rectangular'
+        for cell in row:
+            assert cell in (*SYMBOLS,'.'), f"'{cell}' is not a valid symbol"
