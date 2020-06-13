@@ -58,7 +58,7 @@ class StringConversion(unittest.TestCase):
                     grid2 = string_to_grid(string,row_delimiter=d1,col_delimiter=d2)
                     self.assertEqual(grid2, grid)
 
-class Rotations(unittest.TestCase):
+class RotationsSquare(unittest.TestCase):
     def test_clockwise(self):
         ''' Clockwise rotation '''
         with self.subTest('2x2'):
@@ -113,6 +113,21 @@ class Rotations(unittest.TestCase):
             grid = [['A','B','C'],['D','E','F'],['G','H','I']]
             target = [['C','B','A'],['F','E','D'],['I','H','G']]
             self.assertEqual(fliplr(grid),target)
+
+class RotationsRectangle(unittest.TestCase):
+
+    def test_clockwise(self):
+        ''' Clockwise rotation '''
+        grids = ([['A','B']],[['A'],['B']],
+            [['A','B','C'],['D','E','F']],
+            [['A','B'],['C','D'],['E','F']])
+        targets = ([['A'],['B']],[['B','A']],
+            [['D','A'],['E','B'],['F','C']],
+            [['E','C','A'],['F','D','B']])
+        for grid,target in zip(grids,targets):
+            with self.subTest():
+                self.assertEqual(rotate_p90(grid),target)
+
 
 class EmptyCreation(unittest.TestCase):
     
@@ -177,6 +192,14 @@ class GridValidator(unittest.TestCase):
                     isvalidgrid(grid)
                 except AssertionError:
                     self.fail('Unexpected AssertionError on a valid grid')
+
+class MakeBehaviour(unittest.TestCase):
+
+    def test_all_false(self):
+        target = dict(zip(PROPERTIES,[False,]*len(PROPERTIES)))
+        behaviour = make_behaviour()
+        self.assertDictEqual(behaviour,target)
+    
 
 if __name__ == '__main__':
     unittest.main()

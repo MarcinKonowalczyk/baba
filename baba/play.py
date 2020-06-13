@@ -4,6 +4,9 @@ from copy import deepcopy
 import os, sys
 sys.path.append(os.path.realpath('.'))
 from baba.utils import *
+from baba.rules import *
+
+sn = symbol_to_name;
 
 STEPS = ('^','V','<','>')
 
@@ -70,13 +73,11 @@ def timestep(grid,behaviours,step):
                 new_grid[j-1][k] = cell;
             except UnableToMove:
                 if len(pile)>0  and iswin(pile[0]):
-                    raise YouWin
+                    raise YouWin(f"You are '{sn(cell)}' and you've walked onto a '{sn(pile[0])}' which is 'win'. Hooray! :D ")
                 new_grid[j][k] = cell;
 
     new_grid = crots[step](new_grid)
     return new_grid
-
-# %%
 
 def swap(grid,swaps):
     ''' Apply all the swaps to the grid '''
@@ -93,7 +94,23 @@ def swap(grid,swaps):
     
     return new_grid
 
-# %%
 def play(grid,sequence):
+    ''' Play a game, given the sequence of moves '''
+    
+    isvalidgrid(grid)
 
-    pass
+    for step in (*sequence,None):
+        rules = rulefinder(grid)
+        behaviours, swaps = ruleparser(rules)
+
+        # Check for you is win condition
+        for noun in behaviours:
+            if behaviours[noun]['y'] and behaviours[noun]['n']:
+                raise YouWin(f"You are '{sn(noun)}' and you are 'win'. Hooray! :D")
+        
+        # Timestep the grid
+        if step:
+            grid = timestep(grid,behaviours,step)
+            grid = swap(grid,swaps)
+
+    return grid

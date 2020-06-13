@@ -1,12 +1,15 @@
 # %% Things to export
-__all__ = ['PROPERTIES','NOUNS','ENTITIES','isproperty','isnoun','isentity','SYMBOLS','issymbol','isis','istext','isempty','grid_to_string','string_to_grid','default_grid_string','default_grid','transpose','fliplr','rotate_p90','rotate_m90','rotate_180','empty_NM','make_behaviour','isvalidgrid']
+__all__ = ['PROPERTIES','NOUNS','ENTITIES','isproperty','isnoun','isentity','SYMBOLS','issymbol','isis','istext','isempty','grid_to_string','string_to_grid','default_grid_string','default_grid','transpose','fliplr','rotate_p90','rotate_m90','rotate_180','empty_NM','make_behaviour','isvalidgrid','symbol_to_name']
 
 # %%
-# you, push, win
 PROPERTIES = ('y','p','n')
-# baba, wall, flag, rock
+PROPERTY_NAMES = ('you','push','win')
+
 NOUNS = ('b','w','f','r')
+NOUN_NAMES = ('baba','wall','flag','rock')
+
 ENTITIES = tuple(n.upper() for n in NOUNS)
+ENTITY_NAMES = tuple(n.capitalize() for n in NOUN_NAMES)
 
 # Helper functions
 isproperty = lambda symbol: symbol in PROPERTIES
@@ -14,10 +17,12 @@ isnoun = lambda symbol: symbol in NOUNS
 isentity = lambda symbol: symbol in ENTITIES
 
 SYMBOLS = (*PROPERTIES,*NOUNS,*ENTITIES,'i')
+SYMBOL_NAMES = (*PROPERTY_NAMES,*NOUN_NAMES,*ENTITY_NAMES,'is')
 issymbol = lambda symbol: symbol in SYMBOLS
 isis = lambda symbol: symbol=='i'
 
 TEXT = (*PROPERTIES,*NOUNS,'i')
+TEXT_NAMES = (*PROPERTY_NAMES,*NOUN_NAMES,'is')
 istext = lambda symbol: symbol in TEXT
 isempty = lambda cell: cell=='.'
 
@@ -89,3 +94,9 @@ def isvalidgrid(grid):
         assert len(row)==M, 'Grid must be rectangular'
         for cell in row:
             assert cell in (*SYMBOLS,'.'), f"'{cell}' is not a valid symbol"
+
+def symbol_to_name(symbol):
+    ''' Give a full name of a symbol '''
+    for s,name in zip(SYMBOLS,SYMBOL_NAMES):
+        if symbol == s:
+            return name

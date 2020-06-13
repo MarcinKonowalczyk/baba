@@ -8,9 +8,17 @@ from baba.play import *
 
 # %%
 
-grid = default_grid();
-grid[5][4] = 'W';
-grid[11][3], grid[11][4], grid[11][5] = 'wiy'
+string = '''.............
+.rip...RRRRR.
+.......R...R.
+.biy.B.R.F.R.
+.......R...R.
+.fin...RRRRR.
+.............
+'''
+grid = string_to_grid(string);
+# grid[11][3], grid[11][4], grid[11][5] = 'wiy'
+# grid[11][7], grid[11][8], grid[11][9] = 'bin'
 for row in grid:
     print(' '.join(row))
 print('\n')
@@ -18,14 +26,16 @@ print('\n')
 rules = rulefinder(grid)
 print('Rules:\n', rules, '\n')
 
-behaviours, transformations = ruleparser(rules)
+behaviours, swaps = ruleparser(rules)
 print('Behaviours:\n', behaviours, '\n')
-print('Transformations:\n', transformations, '\n')
+print('Swaps:\n', swaps, '\n')
 
 # %%
-grid2 = timestep(grid,behaviours,'>');
+
+grid2 = play(grid,'')
 for row in grid2:
     print(' '.join(row))
+
 # %%
 
 pile = ('.','R','f','i','w','W','.','R','W')
