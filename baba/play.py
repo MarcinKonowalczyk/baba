@@ -1,5 +1,6 @@
 # %%
 from copy import deepcopy
+from more_itertools import flatten
 
 import os, sys
 sys.path.append(os.path.realpath('.'))
@@ -94,6 +95,9 @@ def swap(grid,swaps):
     
     return new_grid
 
+class YouLose(Exception):
+    pass
+
 def play(grid,sequence):
     ''' Play a game, given the sequence of moves '''
     
@@ -107,10 +111,16 @@ def play(grid,sequence):
         for noun in behaviours:
             if behaviours[noun]['y'] and behaviours[noun]['n']:
                 raise YouWin(f"You are '{sn(noun)}' and you are 'win'. Hooray! :D")
-        
+
+        # Do the swap
+        grid = swap(grid,swaps)
+
+        entities_present = {j.lower() for j in flatten(grid) if isentity(j)}
+        if not any(behaviours[e]['y'] for e in entities_present):
+            raise YouLose("Nothing is 'you'. Game over.")
+
         # Timestep the grid
         if step:
             grid = timestep(grid,behaviours,step)
-            grid = swap(grid,swaps)
 
     return grid
