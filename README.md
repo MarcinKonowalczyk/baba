@@ -38,11 +38,37 @@ The order of operation of each turn is as follows:
   
 This is done for each of the steps in a sequence. The game stops if the win condition is reached at any point, or if further play is unnecessary because nothing is `you` (effectively a loss).
 
+## Examples
+
+The gifs in this section have been generated with `animate\animate.py` and the accompanying IPython notebook.
+
+Flag is already win, so all baba needs to do is to attempt to walk on it. `>>>>` wouldn't work because in this version everything is stop. Hence `>>^>>V`:
+
+![fastest_win](./animation/fastest_win.gif)
+
+In a similar manner, fastest loss can be achieved by breaking the `Baba is You` rule with `<^<V`:
+
+![fastest_loss](./animation/fastest_loss.gif)
+
+### Winning with rocks
+
+Somewhat more creative win can be achieved by making `Rock if Baba` and walking onto the flag. This can be done with `<^^^<<V^>>VV<<>>`:
+
+![fastest_win](./animation/rock_is_baba.gif)
+
+Similarly, `Rock` can be made into `You` with `<^^^<<V^<<VV>><<^>><<`. Note that the last few moves could not be made to the right because `Baba`, who is also `You` would have broken the `Rock is You` rule after one step.
+
+![fastest_win](./animation/rock_is_you.gif)
+
+The sequence `<VVV<^<^>V>^^V<<<<^^^>^>>>>VVV<^>>>` makes `Rock` into a `Win` instead:
+
+![fastest_win](./animation/rock_is_win.gif)
+
 ## ToDo's
 
-- Actually meet the scope
-- Write a nice renderer of a game (make a gif of it, for example)
-- Write an tiny codegolf version. _Given a sequence of moves, does it win on a standardised level?_ For this it might be best to make a smaller level with just `Baba`, `Flag` and `Rock`. Maybe something like that(?):
+- [x] Actually meet the scope
+- [x] Write a nice renderer of a game (make a gif of it, for example)
+- [ ] Write an tiny codegolf version. _Given a sequence of moves, does it win on a standardised level?_ For this it might be best to make a smaller level with just `Baba`, `Flag` and `Rock`. Maybe something like that(?):
 
 ```
 . . . . . . . . . . . . .
@@ -54,7 +80,7 @@ This is done for each of the steps in a sequence. The game stops if the win cond
 . . . . . . . . . . . . .
 ```
 
-Also:
+### Also
 
 - Actually put things into classes?
 - Hook up coveralls?
