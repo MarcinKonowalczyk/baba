@@ -21,8 +21,9 @@ class Walking(unittest.TestCase):
         targets = map(sg,('B\n.','.\nB','B.','.B'))
         for grid,step,target in zip(grids,STEPS,targets):
             with self.subTest(grid):
-                grid2 = timestep(grid,biy,step)
+                grid2,youwin = timestep(grid,biy,step)
                 self.assertEqual(grid2,target)
+                self.assertIsNone(youwin)
 
     def test_walking_entities(self):
         ''' Walking entities '''
@@ -40,16 +41,18 @@ class Walking(unittest.TestCase):
             
             for step,target in zip(STEPS,targets):
                 with self.subTest(grid):
-                    grid2 = timestep(grid,behaviours,step)
+                    grid2,youwin = timestep(grid,behaviours,step)
                     self.assertEqual(grid2,target)
+                    self.assertIsNone(youwin)
 
     def test_claustrophobic_baba(self):
         ''' Baba with nowhere to move '''
         grid = sg('B')
         for step in STEPS:
             with self.subTest(grid):
-                grid2 = timestep(grid,biy,step)
+                grid2,youwin = timestep(grid,biy,step)
                 self.assertEqual(grid2,grid)
+                self.assertIsNone(youwin)
 
     def test_identity_crisis(self):
         ''' Baba is not you '''
@@ -57,8 +60,9 @@ class Walking(unittest.TestCase):
             grid = sg('{}.'.format(entity))
             behaviour = {entity.lower():mb(you=False)}
             with self.subTest(entity):
-                grid2 = timestep(grid,behaviour,'>')
+                grid2,youwin = timestep(grid,behaviour,'>')
                 self.assertEqual(grid2,grid)
+                self.assertIsNone(youwin)
 
     def test_confused_baba(self):
         ''' Baba bonking into the wall '''
@@ -67,8 +71,9 @@ class Walking(unittest.TestCase):
             '...\nB..\n...','...\n..B\n...'))
         for grid,step in zip(grids,STEPS):
             with self.subTest(grid):
-                grid2 = timestep(grid,biy,step)
+                grid2,youwin = timestep(grid,biy,step)
                 self.assertEqual(grid2,grid)
+                self.assertIsNone(youwin)
 
     def test_complex_walking(self):
         ''' Test more complicates sequences of steps '''
@@ -77,7 +82,8 @@ class Walking(unittest.TestCase):
         for steps,target in zip(paths,targets):
             grid = sg('...\n.B.\n...')
             for step in steps:
-                grid = timestep(grid,biy,step)
+                grid,youwin = timestep(grid,biy,step)
+                self.assertIsNone(youwin)
             self.assertEqual(grid,target)
 
 class Winning(unittest.TestCase):
@@ -89,7 +95,8 @@ class Winning(unittest.TestCase):
         for grid in grids:
             with self.subTest(grid):
                 with self.assertRaises(YouWin):
-                    timestep(grid,behaviour,'>')
+                    _,youwin = timestep(grid,behaviour,'>')
+                    if youwin: raise youwin
 
     def test_dont_win_but_push(self):
         ''' Walk into a win which is also push '''
@@ -100,7 +107,8 @@ class Winning(unittest.TestCase):
         for grid, target in zip(grids,targets):
             with self.subTest(grid):
                 try:
-                    grid2 = timestep(grid,behaviour,'>')
+                    grid2,youwin = timestep(grid,behaviour,'>')
+                    if youwin: raise youwin
                     self.assertEqual(grid2,target)
                 except YouWin:
                     self.fail("'timestep' raised YouWin unexpectedly!")
@@ -112,7 +120,8 @@ class Winning(unittest.TestCase):
             'f':mb(win=True,push=True)}
         for grid in grids:
             with self.assertRaises(YouWin):
-                timestep(grid,behaviour,'>')
+                _,youwin = timestep(grid,behaviour,'>')
+                if youwin: raise youwin
 
     def test_rock_doesnt_win(self):
         ''' Push a rock into a win '''
@@ -123,7 +132,8 @@ class Winning(unittest.TestCase):
         for grid,target in zip(grids,targets):
             with self.subTest(grid):
                 try:
-                    grid2 = timestep(grid,behaviour,'>')
+                    grid2,youwin = timestep(grid,behaviour,'>')
+                    if youwin: raise youwin
                     self.assertEqual(grid2,target)
                 except YouWin:
                     self.fail("'timestep' raised YouWin unexpectedly!")

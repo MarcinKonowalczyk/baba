@@ -43,9 +43,6 @@ def attempt_to_move(pile,behaviours):
         budged = attempt_to_move(pile[1:],behaviours)
         return (budged[0], pile[0], *budged[1:])
 
-class YouWin(Exception):
-    pass
-
 def timestep(grid,behaviours,step):
     ''' Advance grid a single timestep, given the step and the current behaviours '''
     grid = rots[step](grid)
@@ -54,6 +51,7 @@ def timestep(grid,behaviours,step):
 
     isyou = lambda cell: isentity(cell) and behaviours[cell.lower()]['y']
     iswin = lambda cell: isentity(cell) and behaviours[cell.lower()]['n']
+    youwin = None # youwin exception
 
     for j,row in enumerate(grid):
         for k,cell in enumerate(row):
@@ -74,11 +72,11 @@ def timestep(grid,behaviours,step):
                 new_grid[j-1][k] = cell;
             except UnableToMove:
                 if len(pile)>0  and iswin(pile[0]):
-                    raise YouWin(f"You are '{sn(cell)}' and you've walked onto a '{sn(pile[0])}' which is 'win'. Hooray! :D ")
+                    youwin = YouWin(f"You are '{sn(cell)}' and you've walked onto a '{sn(pile[0])}' which is 'win'. Hooray! :D ")
                 new_grid[j][k] = cell;
 
     new_grid = crots[step](new_grid)
-    return new_grid
+    return new_grid, youwin
 
 def swap(grid,swaps):
     ''' Apply all the swaps to the grid '''
@@ -94,6 +92,9 @@ def swap(grid,swaps):
                     new_grid[j][k] = b.upper()
     
     return new_grid
+
+class YouWin(Exception):
+    pass
 
 class YouLose(Exception):
     pass
@@ -121,6 +122,7 @@ def play(grid,sequence):
 
         # Timestep the grid
         if step:
-            grid = timestep(grid,behaviours,step)
+            (grid,youwin) = timestep(grid,behaviours,step)
+            if youwin: raise youwin
 
     return grid
