@@ -45,18 +45,17 @@ This is done for each of the steps in a sequence. The game stops if the win cond
 - Write an tiny codegolf version. _Given a sequence of moves, does it win on a standardised level?_ For this it might be best to make a smaller level with just `Baba`, `Flag` and `Rock`. Maybe something like that(?):
 
 ```
-...............
-.rim....RRRRR..
-........R...R..
-.biy..B.R.F.R..
-........R...R..
-.fin....RRRRR..
-...............
+. . . . . . . . . . . . .
+. r i p . . . . R R R . .
+. . . . . . . R . . . R .
+. b i y . B . R . F . R .
+. . . . . . . R . . . R .
+. f i n . . . . R R R . .
+. . . . . . . . . . . . .
 ```
 
 Also:
 
 - Actually put things into classes?
-- Write more tests
 - Hook up coveralls?
 
