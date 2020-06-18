@@ -70,13 +70,15 @@ If the `rock is push` and `rock is win` you have to push the rock into a stuck p
 
 ### Swap order
 
-Swaps are applied in alphabetic order, sorted by first and then second noun. They are applied to a **copy** of the grid., but only **once** per item. The following example illustrates:
+Swaps are applied in alphabetic order, sorted by first and then second noun. They are applied to a **copy** of the grid., but only **once** per item. The following examples illustrate:
 
-![rules_act_alphabetically](./animation/rules_act_alphabetically.gif)
+![rules_act_alphabetically_1](./animation/rules_act_alphabetically_1.gif)
+and
+![rules_act_alphabetically_2](./animation/rules_act_alphabetically_2.gif)
 
 Two swap rules come into existence simultaneously: `rock is baba` and `rock is flag`. The former is applied first. Then, the latter is *not* applied because a rule has already been applied to `rock`. I think (but I'm not 100% sure) that the same behaviour would result if all the swaps were to be applied to the grid sorted in the reverse alphabetic order by the second noun.
 
-The above sequence of moves is `<^<<<<V>>^<<^^>>V^<<VV>>^><V><V><<<VVV>^^<^>>V>^^<^>VVV>VV<<^^^<^>V>^<^>><<V<<^>>>>>V<^<VV<<`.
+The above sequences of moves are: `<^<<<<V>>^<<^^>>V^<<VV>>^><V><V><<<VVV>^^<^>>V>^^<^>VVV>VV<<^^^<^>V>^<^>><<V<<^>>>>>V<^<VV<<`, and `<^<<<<V>>^<<^^>>VV<V>V>>VV<<^V<<^>^^^<^>^>VV>V<V<V>^^>V>V>>>^^<<`.
 
 This type of behaviour is different to the original Baba is You game, since only one symbol can exist in a tile.
 
