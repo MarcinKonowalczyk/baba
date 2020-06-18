@@ -31,11 +31,11 @@ class ParseRules(unittest.TestCase):
             with self.subTest(key=key):
                 self.assertDictEqual(behaviours[key],target_behaviours[key])
         with self.subTest('swaps'):
-            self.assertEquals(swaps,[])
+            self.assertEqual(swaps,[])
 
     def test_swaps(self):
         ''' Just swaps '''
-        rules = [('b','w'),('b','b'),('b','r'),('w','r'),('f','r')];
+        rules = sorted([('b','w'),('b','b'),('b','r'),('w','r'),('f','r')]);
         behaviours, swaps = ruleparser(rules)
         for key in behaviours:
             with self.subTest(key=key):
