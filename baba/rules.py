@@ -33,7 +33,8 @@ def rulefinder(grid):
                     rules.append((t[0],t[2]))
 
     # Sort according to the first letter
-    rules = sorted(rules,key=lambda x:x[0])
+    # rules = sorted(rules,key=lambda x:x[0])
+    rules = sorted(rules)
     return rules
 
 def ruleparser(rules):
@@ -49,6 +50,8 @@ def ruleparser(rules):
             behaviours[subject][action] = True
         else: # (Noun is Noun)
             swaps.append((subject,action))
+
+    swaps = sorted(swaps)
 
     # Add entry for text behaviour
     behaviours['t'] = make_behaviour(push=True);

@@ -54,15 +54,31 @@ In a similar manner, fastest loss can be achieved by breaking the `Baba is You` 
 
 Somewhat more creative win can be achieved by making `Rock if Baba` and walking onto the flag. This can be done with `<^^^<<V^>>VV<<>>`:
 
-![fastest_win](./animation/rock_is_baba.gif)
+![rock_is_baba](./animation/rock_is_baba.gif)
 
 Similarly, `Rock` can be made into `You` with `<^^^<<V^<<VV>><<^>><<`. Note that the last few moves could not be made to the right because `Baba`, who is also `You` would have broken the `Rock is You` rule after one step.
 
-![fastest_win](./animation/rock_is_you.gif)
+![rock_is_you](./animation/rock_is_you.gif)
 
-The sequence `<VVV<^<^>V>^^V<<<<^^^>^>>>>VVV<^>>>` makes `Rock` into a `Win` instead:
+The sequence `<VVV<^<^>V>^^V<<<<^^^>^>>>>VVV<^>>>` makes `rock is win` rule instead:
 
-![fastest_win](./animation/rock_is_win.gif)
+![rock_is_win](./animation/rock_is_win.gif)
+
+If the `rock is push` and `rock is win` you have to push the rock into a stuck position to actually win with it:
+
+![rock_is_win_and_push](./animation/rock_is_win_and_push.gif)
+
+### Swap order
+
+Swaps are applied in alphabetic order, sorted by first and then second noun. They are applied to a **copy** of the grid., but only **once** per item. The following example illustrates:
+
+![rules_act_alphabetically](./animation/rules_act_alphabetically.gif)
+
+Two swap rules come into existence simultaneously: `rock is baba` and `rock is flag`. The former is applied first. Then, the latter is *not* applied because a rule has already been applied to `rock`. I think (but I'm not 100% sure) that the same behaviour would result if all the swaps were to be applied to the grid sorted in the reverse alphabetic order by the second noun.
+
+The above sequence of moves is `<^<<<<V>>^<<^^>>V^<<VV>>^><V><V><<<VVV>^^<^>>V>^^<^>VVV>VV<<^^^<^>V>^<^>><<V<<^>>>>>V<^<VV<<`.
+
+This type of behaviour is different to the original Baba is You game, since only one symbol can exist in a tile.
 
 ## ToDo's
 

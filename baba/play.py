@@ -88,8 +88,10 @@ def swap(grid,swaps):
     for a,b in swaps:
         for j,row in enumerate(grid):
             for k,cell in enumerate(row):
-                if isentity(cell) and cell.lower()==a:
-                    new_grid[j][k] = b.upper()
+                if isentity(cell):
+                    # If the rule applies to the cell, and no other rule has been applied yet
+                    if cell.lower()==a and new_grid[j][k] is cell:
+                        new_grid[j][k] = b.upper()
     
     return new_grid
 
