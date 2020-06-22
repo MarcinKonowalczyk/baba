@@ -52,30 +52,29 @@ def Y(q):
 	{r}0''')
 
 if __name__ == '__main__':
-
-    # A pile of test sequences and the result expected on the golfing grid
-    tests = (('>>^>>V',1),
-        ('<^<V',0),
-        ('<^^^<<V^>>VV<<>>',1),
-        ('<VV<V<<^V>>^<',1),
-        ('<^^^<<V>V<>>',1),
-        ('<^^^<<V^<<VV>><<^>><<',1),
-        ('<VVV<^<^>V>^^V<<<<^^^>^>>>>VVV<^>>>',1),
-        ('<^<<<<V>>>V>VV<<^^^>^<VV>>V<V<^^>^<V>>>>>>>V<^^^^>^<<<<<<<<<',1),
-        ('<V<<<<V>>V>^^>>^^>>^>>V',0),
-        ('<V<<<<V>>V>>^^VV>^^',0),
-        ('<V<<V^<V>>>^^<^>^^<<V^<<VV>>>^>VVVV^^^<<<<^>>^>VVVV>>V^<<V>>^^>>',1),
+	# A pile of test sequences and the result expected on the golfing grid
+	tests = (('>>^>>V',1),
+		('<^<V',0),
+		('<^^^<<V^>>VV<<>>',1),
+		('<VV<V<<^V>>^<',1),
+		('<^^^<<V>V<>>',1),
+		('<^^^<<V^<<VV>><<^>><<',1),
+		('<VVV<^<^>V>^^V<<<<^^^>^>>>>VVV<^>>>',1),
+		('<^<<<<V>>>V>VV<<^^^>^<VV>>V<V<^^>^<V>>>>>>>V<^^^^>^<<<<<<<<<',1),
+		('<V<<<<V>>V>^^>>^^>>^>>V',0),
+		('<V<<<<V>>V>>^^VV>^^',0),
+		('<V<<V^<V>>>^^<^>^^<<V^<<VV>>>^>VVVV^^^<<<<^>>^>VVVV>>V^<<V>>^^>>',1),
 		('>VV>^^<^>V>^VV<<<<<<<V^>V>>^>V^^<<^>^^<<V^<<VV>>>^>VVVV^^^<<<<^>>^>VVVVV^^>>>>>>',1),
-        ('<V<<<<V>>V>>>^V<<<^>V>>^V<<^>V>>^^^>>^>>V',0),
-        ('<V<<<<V>>V>>>^V<<<^>V>>^V<<^>><^^^>V>V<^<V<VV>>>>^<<<>^^>>^>>V',0),
-        ('<^<<<<V>>^<<^^>>V^<<VV>>^><V><V><<<VVV>^^<^>>V>^^<^>VVV>VV<<^^^<^>V>^<^>><<V<<^>>>>>V<^<VV<<',1),
-        ('<^<<<<V>>^<<^^>>VV<V>V>>VV<<^V<<^>^^^<^>^>VV>V<V<V>^^>V>V>>>^^<<',1),
-        ('<^^^<<V^<<V><VVVVV>>^V<<^>^<^><',0),
-        ('<^^^<<V^<<V>>>><<<V>>><<<<VVVV>>^V<<<^^>>>><<<<V>>>><<<<^^>>>><',0),
+		('<V<<<<V>>V>>>^V<<<^>V>>^V<<^>V>>^^^>>^>>V',0),
+		('<V<<<<V>>V>>>^V<<<^>V>>^V<<^>><^^^>V>V<^<V<VV>>>>^<<<>^^>>^>>V',0),
+		('<^<<<<V>>^<<^^>>V^<<VV>>^><V><V><<<VVV>^^<^>>V>^^<^>VVV>VV<<^^^<^>V>^<^>><<V<<^>>>>>V<^<VV<<',1),
+		('<^<<<<V>>^<<^^>>VV<V>V>>VV<<^V<<^>^^^<^>^>VV>V<V<V>^^>V>V>>>^^<<',1),
+		('<^^^<<V^<<V><VVVVV>>^V<<^>^<^><',0),
+		('<^^^<<V^<<V>>>><<<V>>><<<<VVVV>>^V<<<^^>>>><<<<V>>>><<<<^^>>>><',0),
 		('VVVV>>>>>>>>^^^^^^^>^^>^>^<<<<<<<<<<<<<VVVVVVV^^>>>>>>>>^>',1))
 
-    green = lambda x: f'\x1b[32m{x}\x1b[0m'
-    red = lambda x: f'\x1b[31m{x}\x1b[0m'
-    for sequence,expected in tests:
-        result = green('- PASS -') if Y(sequence)==expected else red('! FAIL !')
-        print(f'{sequence}\n{result}')
+	green = lambda x: f'\x1b[32m{x}\x1b[0m'
+	red = lambda x: f'\x1b[31m{x}\x1b[0m'
+	for sequence,expected in tests:
+		result = green('- PASS -') if Y(sequence)==expected else red('! FAIL !')
+		print(f'{sequence}\n{result}')
