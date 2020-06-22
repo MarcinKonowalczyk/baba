@@ -32,8 +32,8 @@ The game is played by providing a sequence of actions. The allowed actions are `
 The order of operation of each turn is as follows:
   
 - Search the grid for all the current rules
-- Parse the rules into behaviours and transformations.
-- Apply all the transformations to the grid
+- Parse the rules into behaviours and swaps
+- Apply all the swaps to the grid
 - Perform an action for the turn according to the behaviours
   
 This is done for each of the steps in a sequence. The game stops if the win condition is reached at any point, or if further play is unnecessary because nothing is `you` (effectively a loss).
