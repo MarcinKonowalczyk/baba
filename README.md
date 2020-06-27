@@ -1,9 +1,7 @@
 [![TravisCI](https://travis-ci.org/MarcinKonowalczyk/baba.svg?branch=master&service=github)](https://travis-ci.org/MarcinKonowalczyk/baba?branch=master)
 
 # baba
-Simplified implementation of [Baba Is You](https://hempuli.com/baba/).
-
-This is a work-in-progress project. The intended scope, however, is as follows:
+Simplified implementation of [Baba Is You](https://hempuli.com/baba/), fo the purpose of a code golfing [challenge](https://codegolf.stackexchange.com/questions/206452/baba-is-golf-flag-is-win). This implementation is limited to the following parts of the game:
 
 - 4 possible entities: `Baba`, `Wall`, `Flag`, `Rock` (uppercase)
 - 4 corresponding nouns (lowercase)
@@ -44,37 +42,37 @@ The gifs in this section have been generated with `animate\animate.py` and the a
 
 Flag is already win, so all baba needs to do is to attempt to walk on it. `>>>>` wouldn't work because in this version everything is stop. Hence `>>^>>V`:
 
-![fastest_win](./animation/fastest_win.gif)
+![fastest_win](./animation/gifs/fastest_win.gif)
 
 In a similar manner, fastest loss can be achieved by breaking the `Baba is You` rule with `<^<V`:
 
-![fastest_loss](./animation/fastest_loss.gif)
+![fastest_loss](./animation/gifs/fastest_loss.gif)
 
 ### Winning with rocks
 
 Somewhat more creative win can be achieved by making `Rock if Baba` and walking onto the flag. This can be done with `<^^^<<V^>>VV<<>>`:
 
-![rock_is_baba](./animation/rock_is_baba.gif)
+![rock_is_baba](./animation/gifs/rock_is_baba.gif)
 
 Similarly, `Rock` can be made into `You` with `<^^^<<V^<<VV>><<^>><<`. Note that the last few moves could not be made to the right because `Baba`, who is also `You` would have broken the `Rock is You` rule after one step.
 
-![rock_is_you](./animation/rock_is_you.gif)
+![rock_is_you](./animation/gifs/rock_is_you.gif)
 
 The sequence `<VVV<^<^>V>^^V<<<<^^^>^>>>>VVV<^>>>` makes `rock is win` rule instead:
 
-![rock_is_win](./animation/rock_is_win.gif)
+![rock_is_win](./animation/gifs/rock_is_win.gif)
 
 If the `rock is push` and `rock is win` you have to push the rock into a stuck position to actually win with it:
 
-![rock_is_win_and_push](./animation/rock_is_win_and_push.gif)
+![rock_is_win_and_push](./animation/gifs/rock_is_win_and_push.gif)
 
 ### Swap order
 
 Swaps are applied in alphabetic order, sorted by first and then second noun. They are applied to a **copy** of the grid., but only **once** per item. The following examples illustrate:
 
-![rules_act_alphabetically_1](./animation/rules_act_alphabetically_1.gif)
+![rules_act_alphabetically_1](./animation/gifs/rules_act_alphabetically_1.gif)
 and
-![rules_act_alphabetically_2](./animation/rules_act_alphabetically_2.gif)
+![rules_act_alphabetically_2](./animation/gifs/rules_act_alphabetically_2.gif)
 
 Two swap rules come into existence simultaneously: `rock is baba` and `rock is flag`. The former is applied first. Then, the latter is *not* applied because a rule has already been applied to `rock`. I think (but I'm not 100% sure) that the same behaviour would result if all the swaps were to be applied to the grid sorted in the reverse alphabetic order by the second noun.
 
@@ -86,7 +84,7 @@ This type of behaviour is different to the original Baba is You game, since only
 
 - [x] Actually meet the scope
 - [x] Write a nice renderer of a game (make a gif of it, for example)
-- [ ] Write an tiny codegolf version. _Given a sequence of moves, does it win on a standardised level?_ For this it might be best to make a smaller level with just `Baba`, `Flag` and `Rock`. Maybe something like that(?):
+- [x] Write an tiny codegolf version. _Given a sequence of moves, does it win on a standardised level?_ For this it might be best to make a smaller level with just `Baba`, `Flag` and `Rock`. Maybe something like that(?):
 
 ```
 . . . . . . . . . . . . .
