@@ -1,4 +1,4 @@
-[![TravisCI](https://travis-ci.org/MarcinKonowalczyk/baba.svg?branch=master&service=github)](https://travis-ci.org/MarcinKonowalczyk/baba?branch=master)
+[![TravisCI](https://travis-ci.com/MarcinKonowalczyk/baba.svg?branch=master&service=github)](https://travis-ci.com/MarcinKonowalczyk/baba?branch=master)
 
 # baba
 Simplified implementation of [Baba Is You](https://hempuli.com/baba/), fo the purpose of a code golfing [challenge](https://codegolf.stackexchange.com/questions/206452/baba-is-golf-flag-is-win). This implementation is limited to the following parts of the game:
@@ -100,4 +100,3 @@ This type of behaviour is different to the original Baba is You game, since only
 
 - Actually put things into classes?
 - Hook up coveralls?
-
