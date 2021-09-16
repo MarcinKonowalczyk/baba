@@ -28,7 +28,12 @@ jobs:
     - name: Run tests
       run: python -m unittest discover tests -v
     
+    - name: Run golfing examples
+      run: |
+        python ./golf/golfing_full.py
+        python ./golf/golfing_short.py
+
     - name: Check with black
       run: |
         pip install -Uq black
-        black --check --verbose .
+        black --check --verbose --exclude "golfing_short.py" .

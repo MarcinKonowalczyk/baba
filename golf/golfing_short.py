@@ -56,9 +56,14 @@ if __name__ == '__main__':
  # Text color
  green = lambda x: f'\x1b[32m{x}\x1b[0m'
  red = lambda x: f'\x1b[31m{x}\x1b[0m'
- 
+ exit_code = 0
  for name in TEST_CASES:
   sequence = TEST_CASES[name]['sequence']
   expected = TEST_CASES[name]['outcome']
-  result = green('- PASS -') if Y(sequence)==expected else red('! FAIL !')
-  print(f'{name}\n{sequence}\n{result}')
+  if Y(sequence) == expected:
+   result = green("- PASS -")
+  else:
+   result = red("! FAIL !")
+   exit_code = 1
+  print(f"{sequence}\n{result}")
+ exit(exit_code)
