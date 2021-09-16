@@ -200,39 +200,16 @@ def play(sequence):
 if __name__ == "__main__":
 
     import os, sys
-    sys.path.append(os.path.realpath('.'))
-    from baba.test_cases import TEST_CASES
 
-    # A pile of test sequences and the result expected on the golfing grid
-    # tests = (
-    #     (">>^>>V", 1),
-    #     ("<^<V", 0),
-    #     ("<^^^<<V^>>VV<<>>", 1),
-    #     ("<VV<V<<^V>>^<", 1),
-    #     ("<^^^<<V>V<>>", 1),
-    #     ("<^^^<<V^<<VV>><<^>><<", 1),
-    #     ("<VVV<^<^>V>^^V<<<<^^^>^>>>>VVV<^>>>", 1),
-    #     ("<^<<<<V>>>V>VV<<^^^>^<VV>>V<V<^^>^<V>>>>>>>V<^^^^>^<<<<<<<<<", 1),
-    #     ("<V<<<<V>>V>^^", 0),
-    #     ("<V<<<<V>>V>>^^VV>^^", 0),
-    #     ("<V<<V^<V>>>^^<^>^^<<V^<<VV>>>^>VVVV^^^<<<<^>>^>VVVV>>V^<<V>>^^>>", 1),
-    #     ("<V<<<<V>>V>>>^V<<<^>V>>^V<<^>V>>^^^>>^>>V", 0),
-    #     ("<V<<<<V>>V>>>^V<<<^>V>>^V<<^>><^^^>V>V<^<V<VV>>>>^<<<>^^>>^>>V", 0),
-    #     (
-    #         "<^<<<<V>>^<<^^>>V^<<VV>>^><V><V><<<VVV>^^<^>>V>^^<^>VVV>VV<<^^^<^>V>^<^>><<V<<^>>>>>V<^<VV<<",
-    #         1,
-    #     ),
-    #     ("<^<<<<V>>^<<^^>>VV<V>V>>VV<<^V<<^>^^^<^>^>VV>V<V<V>^^>V>V>>>^^<<", 1),
-    #     ("<^^^<<V^<<V><VVVVV>>^V<<^>^<^><", 0),
-    #     ("<^^^<<V^<<V>>>><<<V>>><<<<VVVV>>^V<<<^^>>>><<<<V>>>><<<<^^>>>><", 0),
-    # )
+    sys.path.append(os.path.realpath("."))
+    from baba.test_cases import TEST_CASES
 
     green = lambda x: f"\x1b[32m{x}\x1b[0m"
     red = lambda x: f"\x1b[31m{x}\x1b[0m"
     exit_code = 0
     for name in TEST_CASES:
-        sequence = TEST_CASES[name]['sequence']
-        expected = TEST_CASES[name]['outcome']
+        sequence = TEST_CASES[name]["sequence"]
+        expected = TEST_CASES[name]["outcome"]
         if play(sequence) == expected:
             result = green("- PASS -")
         else:

@@ -1,6 +1,7 @@
-[![TravisCI](https://travis-ci.com/MarcinKonowalczyk/baba.svg?branch=master&service=github)](https://travis-ci.com/MarcinKonowalczyk/baba?branch=master)
-
 # baba
+
+[![build](https://github.com/MarcinKonowalczyk/baba/actions/workflows/build.yml/badge.svg)](https://github.com/MarcinKonowalczyk/baba/actions/workflows/build.yml) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 Simplified implementation of [Baba Is You](https://hempuli.com/baba/), fo the purpose of a code golfing [challenge](https://codegolf.stackexchange.com/questions/206452/baba-is-golf-flag-is-win). This implementation is limited to the following parts of the game:
 
 - 4 possible entities: `Baba`, `Wall`, `Flag`, `Rock` (uppercase)
