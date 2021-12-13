@@ -31,9 +31,9 @@ The game is played by providing a sequence of actions. The allowed actions are `
 The order of operation of each turn is as follows:
   
 - Search the grid for all the current rules
-- Parse the rules into behaviours and swaps
+- Parse the rules into behaviors and swaps
 - Apply all the swaps to the grid
-- Perform an action for the turn according to the behaviours
+- Perform an action for the turn according to the behaviors
   
 This is done for each of the steps in a sequence. The game stops if the win condition is reached at any point, or if further play is unnecessary because nothing is `you` (effectively a loss).
 
@@ -75,7 +75,7 @@ Swaps are applied in alphabetic order, sorted by first and then second noun. The
 and
 ![rules_act_alphabetically_2](./animation/gifs/rules_act_alphabetically_2.gif)
 
-Two swap rules come into existence simultaneously: `rock is baba` and `rock is flag`. The former is applied first. Then, the latter is *not* applied because a rule has already been applied to `rock`. I think (but I'm not 100% sure) that the same behaviour would result if all the swaps were to be applied to the grid sorted in the reverse alphabetic order by the second noun.
+Two swap rules come into existence simultaneously: `rock is baba` and `rock is flag`. The former is applied first. Then, the latter is *not* applied because a rule has already been applied to `rock`. I think (but I'm not 100% sure) that the same behavior would result if all the swaps were to be applied to the grid sorted in the reverse alphabetic order by the second noun.
 
 The above sequences of moves are: `<^<<<<V>>^<<^^>>V^<<VV>>^><V><V><<<VVV>^^<^>>V>^^<^>VVV>VV<<^^^<^>V>^<^>><<V<<^>>>>>V<^<VV<<`, and `<^<<<<V>>^<<^^>>VV<V>V>>VV<<^V<<^>^^^<^>^>VV>V<V<V>^^>V>V>>>^^<<`.
 
